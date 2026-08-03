@@ -18,6 +18,9 @@ app.use(cors());
 // Allows Express to read JSON data from requests
 app.use(express.json());
 
+const customerRoutes = require("./routes/customerRoutes");
+app.use("/api/customers", customerRoutes);
+
 // Test Route
 app.get("/", (req, res) => {
     res.send("SilaiMitra Backend is Running 🚀");
