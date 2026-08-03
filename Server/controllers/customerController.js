@@ -47,7 +47,118 @@ const getCustomers = (req, res) => {
     });
 };
 
+// Get Customer By ID
+const getCustomerById = (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = "SELECT * FROM customers WHERE id = ?";
+
+    db.query(sql, [id], (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch customer",
+                error: err.message,
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Customer not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            customer: results[0],
+        });
+
+    });
+
+};
+
+
+// Update Customer
+const updateCustomer = (req, res) => {
+
+    const id = req.params.id;
+
+    const { name, phone, email, address } = req.body;
+
+    const sql = `
+        UPDATE customers
+        SET name = ?, phone = ?, email = ?, address = ?
+        WHERE id = ?
+    `;
+
+    db.query(sql, [name, phone, email, address, id], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to update customer",
+                error: err.message,
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Customer not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Customer updated successfully",
+        });
+
+    });
+
+};
+
+
+// Delete Customer
+const deleteCustomer = (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = "DELETE FROM customers WHERE id = ?";
+
+    db.query(sql, [id], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to delete customer",
+                error: err.message,
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Customer not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Customer deleted successfully",
+        });
+
+    });
+
+};
+
 module.exports = {
     addCustomer,
     getCustomers,
+    getCustomerById,
+    updateCustomer,
+    deleteCustomer,
 };
+
