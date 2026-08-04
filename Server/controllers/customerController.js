@@ -1,15 +1,23 @@
-// Contains the logic (insert customer into database)
+// Customer Controller - Handles all Customer CRUD operations
 
 const db = require("../config/db");
 
 // Add Customer
 const addCustomer = (req, res) => {
-    const { name, phone, email, address } = req.body;
+    const { name = "", phone = "", email = "", address = "" } = req.body;
+
+    // Basic Validation
+    if (!name.trim() || !phone.trim() || !email.trim() || !address.trim()) {
+        return res.status(400).json({
+            success: false,
+            message: "Name, phone, email and address are required.",
+        });
+    }
 
     const sql =
         "INSERT INTO customers (name, phone, email, address) VALUES (?, ?, ?, ?)";
 
-    db.query(sql, [name, phone, email, address], (err, result) => {
+    db.query(sql, [name.trim(), phone.trim(), email.trim(), address.trim()], (err, result) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -49,13 +57,11 @@ const getCustomers = (req, res) => {
 
 // Get Customer By ID
 const getCustomerById = (req, res) => {
-
     const id = req.params.id;
 
     const sql = "SELECT * FROM customers WHERE id = ?";
 
     db.query(sql, [id], (err, results) => {
-
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -75,18 +81,27 @@ const getCustomerById = (req, res) => {
             success: true,
             customer: results[0],
         });
-
     });
-
 };
-
 
 // Update Customer
 const updateCustomer = (req, res) => {
-
     const id = req.params.id;
 
-    const { name, phone, email, address } = req.body;
+    const {
+        name = "",
+        phone = "",
+        email = "",
+        address = "",
+    } = req.body;
+
+    // Basic Validation
+    if (!name.trim() || !phone.trim() || !email.trim() || !address.trim()) {
+        return res.status(400).json({
+            success: false,
+            message: "Name, phone, email and address are required.",
+        });
+    }
 
     const sql = `
         UPDATE customers
@@ -94,8 +109,7 @@ const updateCustomer = (req, res) => {
         WHERE id = ?
     `;
 
-    db.query(sql, [name, phone, email, address, id], (err, result) => {
-
+    db.query(sql, [name.trim(), phone.trim(), email.trim(), address.trim(), id], (err, result) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -115,21 +129,16 @@ const updateCustomer = (req, res) => {
             success: true,
             message: "Customer updated successfully",
         });
-
     });
-
 };
-
 
 // Delete Customer
 const deleteCustomer = (req, res) => {
-
     const id = req.params.id;
 
     const sql = "DELETE FROM customers WHERE id = ?";
 
     db.query(sql, [id], (err, result) => {
-
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -149,9 +158,7 @@ const deleteCustomer = (req, res) => {
             success: true,
             message: "Customer deleted successfully",
         });
-
     });
-
 };
 
 module.exports = {
@@ -161,4 +168,3 @@ module.exports = {
     updateCustomer,
     deleteCustomer,
 };
-
