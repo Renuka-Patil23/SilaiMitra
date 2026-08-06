@@ -19,21 +19,6 @@ CREATE TABLE customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Measurement table
-CREATE TABLE measurements (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
-    chest DECIMAL(5,2),
-    waist DECIMAL(5,2),
-    shoulder DECIMAL(5,2),
-    sleeve DECIMAL(5,2),
-    height DECIMAL(5,2),
-
-    FOREIGN KEY (customer_id)
-    REFERENCES customers(id)
-    ON DELETE CASCADE
-);
-
 -- orders table 
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,4 +46,47 @@ CREATE TABLE feedback (
     ON DELETE CASCADE
 );
 
---
+
+-- Measurements Table
+
+CREATE TABLE measurements (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+
+    customer_id INT NOT NULL,
+
+    garment_type Enum('Shirt',
+    'Pant',
+    'Kurta',
+    'Blouse',
+    'Dress',
+    'Suit',
+    'Jacket',
+    'Other') NOT NULL,
+
+    chest DECIMAL(5,2),
+    waist DECIMAL(5,2),
+    hip DECIMAL(5,2),
+    shoulder DECIMAL(5,2),
+    sleeve DECIMAL(5,2),
+    neck DECIMAL(5,2),
+    length DECIMAL(5,2),
+
+    inseam DECIMAL(5,2),
+    thigh DECIMAL(5,2),
+    bottom DECIMAL(5,2),
+
+    front_neck DECIMAL(5,2),
+    back_neck DECIMAL(5,2),
+
+    notes TEXT,
+
+    status ENUM('Active','Archived') DEFAULT 'Active',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (customer_id)
+        REFERENCES customers(id)
+        ON DELETE CASCADE
+);

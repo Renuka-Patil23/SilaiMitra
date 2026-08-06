@@ -18,8 +18,11 @@ app.use(cors());
 // Allows Express to read JSON data from requests
 app.use(express.json());
 
-const customerRoutes = require("./routes/customerRoutes");
+const customerRoutes = require("./routes/customerRoutes");      //customer module 
+const measurementRoutes = require("./routes/measurementRoutes");       //measurement module
+
 app.use("/api/customers", customerRoutes);
+app.use("/api/measurements", measurementRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
