@@ -101,3 +101,47 @@ GET http://localhost:5000/api/measurements
 ## delete measurement 
 
 DELETE http://localhost:5000/api/measurements/1
+
+
+## add orders 
+POST http://localhost:5000/api/orders
+
+{
+  "customer_id": ,3
+  "measurement_id": 1,
+  "garment_type": "Shirt",
+  "quantity": 2,
+  "delivery_date": "2026-08-15",
+  "total_amount": 2000,
+  "advance_amount": 500,
+  "notes": "Full sleeves"
+}
+
+## get all orders 
+
+GET http://localhost:5000/api/orders
+
+## get orders by ID 
+
+GET http://localhost:5000/api/orders/1
+
+## get orders by customers
+GET http://localhost:5000/api/orders/customer/3
+
+## update order
+PUT http://localhost:5000/api/orders/1
+
+{
+    "customer_id": 3,
+    "measurement_id": 3,
+    "garment_type": "Shirt",
+    "quantity": 3,
+    "delivery_date": "2026-08-20",
+    "total_amount": 3000,
+    "advance_amount": 1000,
+    "status": "In Progress",
+    "notes": "Urgent stitching"
+}
+
+## delete order
+DELETE http://localhost:5000/api/orders/1
