@@ -22,16 +22,56 @@ CREATE TABLE customers (
 -- orders table 
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
-    dress_type VARCHAR(100),
-    fabric VARCHAR(100),
-    delivery_date DATE,
-    status VARCHAR(50) DEFAULT 'Pending',
-    price DECIMAL(10,2),
 
-    FOREIGN KEY (customer_id)
-    REFERENCES customers(id)
-    ON DELETE CASCADE
+    customer_id INT NOT NULL,
+    measurement_id INT NOT NULL,
+
+    garment_type ENUM(
+        'Shirt',
+        'Pant',
+        'Kurta',
+        'Blouse',
+        'Dress',
+        'Suit',
+        'Jacket',
+        'Other'
+    ) NOT NULL,
+
+    quantity INT NOT NULL DEFAULT 1,
+
+    order_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+
+    delivery_date DATE NOT NULL,
+
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    advance_amount DECIMAL(10,2) NOT NULL DEFAULT 0,
+
+    remaining_amount DECIMAL(10,2) NOT NULL,
+
+    status ENUM(
+        'Pending',
+        'In Progress',
+        'Ready',
+        'Delivered',
+        'Cancelled'
+    ) DEFAULT 'Pending',
+
+    notes TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_order_customer
+        FOREIGN KEY (customer_id)
+        REFERENCES customers(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_order_measurement
+        FOREIGN KEY (measurement_id)
+        REFERENCES measurements(id)
+        ON DELETE CASCADE
 );
 
 -- feedback table 
