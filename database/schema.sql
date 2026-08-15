@@ -130,3 +130,19 @@ CREATE TABLE measurements (
         REFERENCES customers(id)
         ON DELETE CASCADE
 );
+
+--payments table
+
+CREATE TABLE payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_method ENUM('Cash', 'UPI', 'Card', 'Other') NOT NULL,
+    payment_date DATE NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (order_id)
+        REFERENCES orders(id)
+        ON DELETE CASCADE
+);
