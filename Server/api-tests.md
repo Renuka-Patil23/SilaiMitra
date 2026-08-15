@@ -145,3 +145,37 @@ PUT http://localhost:5000/api/orders/1
 
 ## delete order
 DELETE http://localhost:5000/api/orders/1
+
+
+## add payment
+POST http://localhost:5000/api/payments
+
+{
+  "order_id": 3,
+  "amount": 500,
+  "payment_method": "UPI",
+  "payment_date": "2026-08-08",
+  "notes": "Advance payment"
+}
+
+## get all payments 
+GET http://localhost:5000/api/payments
+
+## get payment by id 
+GET http://localhost:5000/api/payments/1
+
+## get payment by order 
+GET http://localhost:5000/api/payments/order/2
+
+## update payment 
+PUT PUT http://localhost:5000/api/payments/1
+{
+  "order_id": 3,
+  "amount": 700,
+  "payment_method": "Cash",
+  "payment_date": "2026-08-08",
+  "notes": "Updated payment"
+}
+
+## delete payment
+DELETE http://localhost:5000/api/payments/1

@@ -22,10 +22,12 @@ app.use(express.json());
 const customerRoutes = require("./routes/customerRoutes");      //customer module 
 const measurementRoutes = require("./routes/measurementRoutes");       //measurement module
 const orderRoutes = require("./routes/orderRoutes");        //oders module 
+const paymentRoutes = require("./routes/paymentRoutes");    //payment module
 
 app.use("/api/customers", customerRoutes);
 app.use("/api/measurements", measurementRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
