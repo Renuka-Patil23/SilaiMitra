@@ -23,11 +23,13 @@ const customerRoutes = require("./routes/customerRoutes");      //customer modul
 const measurementRoutes = require("./routes/measurementRoutes");       //measurement module
 const orderRoutes = require("./routes/orderRoutes");        //oders module 
 const paymentRoutes = require("./routes/paymentRoutes");    //payment module
+const dashboardRoutes = require("./routes/dashboardRoutes");  //dashboard module
 
 app.use("/api/customers", customerRoutes);
 app.use("/api/measurements", measurementRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

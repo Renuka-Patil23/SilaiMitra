@@ -8,6 +8,7 @@ const {
     getOrdersByCustomer,
     updateOrder,
     deleteOrder,
+    filterOrders
 } = require("../controllers/orderController");
 
 
@@ -20,6 +21,9 @@ router.get("/", getOrders);
 
 // Get Orders By Customer
 router.get("/customer/:customerId", getOrdersByCustomer);
+
+// Filter Orders 
+router.get("/filter", filterOrders);
 
 // Get Order By ID
 router.get("/:id", getOrderById);

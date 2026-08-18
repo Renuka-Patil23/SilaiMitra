@@ -487,6 +487,73 @@ const deleteOrder = (req, res) => {
 
 };
 
+// Filter Orders
+const filterOrders = (req, res) => {
+
+    const {
+        status,
+        garment_type,
+        customer_id,
+        delivery_date
+    } = req.query;
+
+    let sql = `
+        SELECT
+            o.*,
+            c.name AS customer_name,
+            c.phone AS customer_phone
+        FROM orders o
+        JOIN customers c
+            ON o.customer_id = c.id
+        WHERE 1 = 1
+    `;
+
+    const values = [];
+
+    // Filter by status
+    if (status) {
+        sql += " AND o.status = ?";
+        values.push(status);
+    }
+
+    // Filter by garment type
+    if (garment_type) {
+        sql += " AND o.garment_type = ?";
+        values.push(garment_type);
+    }
+
+    // Filter by customer
+    if (customer_id) {
+        sql += " AND o.customer_id = ?";
+        values.push(customer_id);
+    }
+
+    // Filter by delivery date
+    if (delivery_date) {
+        sql += " AND o.delivery_date = ?";
+        values.push(delivery_date);
+    }
+
+    sql += " ORDER BY o.id DESC";
+
+    db.query(sql, values, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to filter orders",
+                error: err.message,
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            count: results.length,
+            orders: results,
+        });
+    });
+};
+
 module.exports = {
     addOrder,
     getOrders,
@@ -494,4 +561,5 @@ module.exports = {
     getOrdersByCustomer,
     updateOrder,
     deleteOrder,
+    filterOrders,
 };

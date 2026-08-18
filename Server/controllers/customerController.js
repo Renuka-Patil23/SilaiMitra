@@ -161,10 +161,61 @@ const deleteCustomer = (req, res) => {
     });
 };
 
+// Search Customers
+const searchCustomers = (req, res) => {
+
+    const { name, phone } = req.query;
+
+    if (!name && !phone) {
+        return res.status(400).json({
+            success: false,
+            message: "Please provide name or phone to search.",
+        });
+    }
+
+    let sql = `
+        SELECT *
+        FROM customers
+        WHERE 1 = 1
+    `;
+
+    const values = [];
+
+    if (name) {
+        sql += " AND name LIKE ?";
+        values.push(`%${name.trim()}%`);
+    }
+
+    if (phone) {
+        sql += " AND phone LIKE ?";
+        values.push(`%${phone.trim()}%`);
+    }
+
+    sql += " ORDER BY id DESC";
+
+    db.query(sql, values, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to search customers",
+                error: err.message,
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            count: results.length,
+            customers: results,
+        });
+    });
+};
+
 module.exports = {
     addCustomer,
     getCustomers,
     getCustomerById,
     updateCustomer,
     deleteCustomer,
+    searchCustomers,
 };
