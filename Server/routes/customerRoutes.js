@@ -9,9 +9,10 @@ const {
     getCustomerById,
     updateCustomer,
     deleteCustomer,
+    searchCustomers
 } = require("../controllers/customerController");
 
-
+router.get("/search", searchCustomers);  //search customers by name or phone
 router.get("/:id", getCustomerById); //get customer by id
 router.get("/", getCustomers); //get all coustomers
 router.put("/:id", updateCustomer); //update customer by id

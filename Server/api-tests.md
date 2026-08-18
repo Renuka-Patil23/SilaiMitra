@@ -179,3 +179,45 @@ PUT PUT http://localhost:5000/api/payments/1
 
 ## delete payment
 DELETE http://localhost:5000/api/payments/1
+
+
+## dashboard APIs
+
+## summary api
+GET http://localhost:5000/api/dashboard/summary
+
+## recent orders 
+ GET http://localhost:5000/api/dashboard/recent-orders
+
+# upcoming deliveries 
+GET /api/dashboard/upcoming-deliveries
+
+# payment summary
+GET /api/dashboard/payment-summary
+
+# customer summary
+GET /api/dashboard/customer-summary
+
+
+## search and filtering 
+
+# search by name 
+GET http://localhost:5000/api/customers/search?name=Renu
+
+# search by phone 
+GET http://localhost:5000/api/customers/search?phone=9876
+
+# search by both name and phone 
+GET http://localhost:5000/api/customers/search?name=ABC&phone=9876543210
+
+# filter orders by status pending 
+GET http://localhost:5000/api/orders/filter?status=Pending
+
+# filter orders by garment type 
+GET http://localhost:5000/api/orders/filter?garment_type=Kurta
+
+# filter orders by customer
+GET http://localhost:5000/api/orders/filter?customer_id=1
+
+# filter orders by delivery date
+GET http://localhost:5000/api/orders/filter?delivery_date=2026-08-25 
