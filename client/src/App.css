@@ -912,12 +912,12 @@ body {
   box-shadow: 0 15px 30px rgba(214, 51, 108, 0.35);
 }
 
-/* order page — split layout, indigo + burnt orange */
+/* order page — emerald + amber split layout */
 
 .order-page {
   min-height: 100vh;
-  padding: 55px 8%;
-  color: #1F2547;
+  padding: clamp(28px, 5vw, 55px) clamp(20px, 8vw, 8%);
+  color: #142A22;
   line-height: 1.6;
 
   /* split grid instead of single centered column */
@@ -926,40 +926,40 @@ body {
   grid-template-areas:
     "header header"
     "form   list";
-  gap: 0 55px;
+  gap: 0 clamp(24px, 4vw, 55px);
   align-items: start;
 
-  /* mesh gradient — indigo + burnt orange pairing */
+  /* mesh gradient — emerald + amber jewel tones */
   background:
-    radial-gradient(circle at 10% 0%, rgba(63, 74, 168, 0.28), transparent 45%),
-    radial-gradient(circle at 92% 15%, rgba(242, 113, 29, 0.32), transparent 45%),
-    radial-gradient(circle at 50% 100%, rgba(63, 74, 168, 0.16), transparent 55%),
-    #FBF2EF;
+    radial-gradient(circle at 10% 0%, rgba(15, 118, 78, 0.30), transparent 45%),
+    radial-gradient(circle at 92% 15%, rgba(217, 158, 45, 0.32), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(15, 118, 78, 0.16), transparent 55%),
+    #F8F6EE;
 }
 
 /* header spans both columns */
 
 .order-header {
   grid-area: header;
-  margin-bottom: 45px;
+  margin-bottom: clamp(28px, 5vw, 45px);
   text-align: center;
 }
 
 .order-header p {
   margin: 0 0 12px;
-  font-size: 22px;
+  font-size: clamp(16px, 2.2vw, 22px);
   font-weight: 700;
   letter-spacing: 4px;
-  color: #F2711D; /* burnt orange */
+  color: #D99E2D; /* amber */
 }
 
 .order-header h1 {
   margin: 0;
   font-family: "Playfair Display", serif;
-  font-size: 42px;
+  font-size: clamp(28px, 4.5vw, 42px);
   font-weight: 500;
   letter-spacing: -2px;
-  color: #1F2547;
+  color: #142A22;
 }
 
 /* status */
@@ -967,9 +967,9 @@ body {
 .order-page > p {
   grid-column: 1 / -1;
   margin: -20px 0 25px;
-  font-size: 14px;
+  font-size: clamp(12px, 1.5vw, 14px);
   font-weight: 600;
-  color: #3F4AA8;
+  color: #0F764E;
 }
 
 /* form panel — left side, fields in a 2-col grid (dense, workspace feel) */
@@ -978,26 +978,26 @@ body {
   grid-area: form;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px 24px;
-  padding: 40px;
-  border: 1px solid rgba(63, 74, 168, 0.25);
+  gap: clamp(4px, 1vw, 6px) clamp(14px, 2.5vw, 24px);
+  padding: clamp(22px, 4vw, 40px);
+  border: 1px solid rgba(15, 118, 78, 0.25);
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 20px 50px rgba(242, 113, 29, 0.15);
+  box-shadow: 0 20px 50px rgba(217, 158, 45, 0.18);
 }
 
 /* field */
 
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 3vw, 24px);
 }
 
 .form-group label {
   display: block;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: clamp(11px, 1.4vw, 13px);
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: #5E679B;
+  color: #4E7A68;
 }
 
 /* notes + button take the full width of the grid */
@@ -1014,19 +1014,19 @@ body {
   width: 100%;
   padding: 12px 4px;
   border: none;
-  border-bottom: 1px solid rgba(63, 74, 168, 0.3);
+  border-bottom: 1px solid rgba(15, 118, 78, 0.3);
   outline: none;
   background: transparent;
-  color: #1F2547;
+  color: #142A22;
   font-family: "DM Sans", sans-serif;
-  font-size: 16px;
+  font-size: clamp(14px, 1.8vw, 16px);
 }
 
 /* focus */
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-bottom: 2px solid #F2711D;
+  border-bottom: 2px solid #D99E2D;
 }
 
 /* notes */
@@ -1040,19 +1040,19 @@ body {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #ABB0D4;
+  color: #A9C3B7;
 }
 
 /* button */
 
 .save-order {
   margin-top: 10px;
-  padding: 18px 22px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px);
   border: none;
   border-radius: 3px;
-  background: linear-gradient(100deg, #3F4AA8, #F2711D);
+  background: linear-gradient(100deg, #0F764E, #D99E2D);
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: clamp(11px, 1.5vw, 13px);
   font-weight: 700;
   letter-spacing: 2px;
   text-align: left;
@@ -1062,48 +1062,48 @@ body {
 
 .save-order:hover {
   transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 15px 30px rgba(63, 74, 168, 0.35);
+  box-shadow: 0 15px 30px rgba(15, 118, 78, 0.35);
 }
 
 /* orders list — right side panel, own surface */
 
 .orders-list {
   grid-area: list;
-  padding: 30px;
-  background: rgba(31, 37, 71, 0.04);
-  border: 1px solid rgba(63, 74, 168, 0.15);
+  padding: clamp(18px, 3vw, 30px);
+  background: rgba(15, 118, 78, 0.05);
+  border: 1px solid rgba(15, 118, 78, 0.15);
   max-height: 80vh;
   overflow-y: auto;
 }
 
 .orders-list h2 {
-  font-size: 13px;
+  font-size: clamp(11px, 1.4vw, 13px);
   letter-spacing: 3px;
   font-weight: 700;
-  color: #1F2547;
-  margin-bottom: 22px;
+  color: #142A22;
+  margin-bottom: clamp(16px, 3vw, 22px);
   padding-bottom: 14px;
-  border-bottom: 1px dashed rgba(63, 74, 168, 0.3);
+  border-bottom: 1px dashed rgba(15, 118, 78, 0.3);
 }
 
 /* card */
 
 .order-card {
-  padding: 18px;
+  padding: clamp(12px, 2vw, 18px);
   margin-bottom: 14px;
   background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(63, 74, 168, 0.15);
-  border-left: 3px solid #F2711D;
+  border: 1px solid rgba(15, 118, 78, 0.15);
+  border-left: 3px solid #D99E2D;
 }
 
 .order-card p {
   margin: 0 0 5px;
-  font-size: 13px;
-  color: #464E80;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: #3D5C50;
 }
 
 .order-card strong {
-  color: #1F2547;
+  color: #142A22;
 }
 
 /* actions */
@@ -1112,10 +1112,10 @@ body {
   margin-top: 10px;
   margin-right: 8px;
   padding: 7px 13px;
-  border: 1px solid rgba(63, 74, 168, 0.4);
+  border: 1px solid rgba(15, 118, 78, 0.4);
   background: transparent;
-  color: #3F4AA8;
-  font-size: 10px;
+  color: #0F764E;
+  font-size: clamp(9px, 1.2vw, 10px);
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
@@ -1123,7 +1123,7 @@ body {
 }
 
 .order-card button:hover {
-  background: #3F4AA8;
+  background: #0F764E;
   color: #FFFFFF;
 }
 
