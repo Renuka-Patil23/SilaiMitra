@@ -19,6 +19,8 @@ function Measurement() {
     const [message, setMessage] = useState("");
     const [measurements, setMeasurements] = useState([]);
     const [editingMeasurementId, setEditingMeasurementId] = useState(null);
+    const [customers, setCustomers] = useState([]);
+    const [selectedCustomerName, setSelectedCustomerName] = useState("");
 
     useEffect(() => {
     fetch("http://localhost:5000/api/measurements")
@@ -26,11 +28,11 @@ function Measurement() {
             const data = await response.json();
 
     if (!response.ok) {
-        console.log("FULL BACKEND RESPONSE:", data);
+    console.log("MEASUREMENT BACKEND ERROR:", data);
 
-        throw new Error(
-            data.error || data.message || "Failed to add measurement"
-        );
+    throw new Error(
+        data.error || data.message || "Failed to add measurement"
+    );
 }
 
             return data;
@@ -41,6 +43,18 @@ function Measurement() {
         })
         .catch((error) => {
             console.error("Error fetching measurements:", error);
+        });
+}, []);
+
+    useEffect(() => {
+    fetch("http://localhost:5000/api/customers")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Customers:", data);
+            setCustomers(data.customers || []);
+        })
+        .catch((error) => {
+            console.error("Error fetching customers:", error);
         });
 }, []);
 
@@ -143,19 +157,21 @@ function Measurement() {
         const measurementData = {
             customer_id: customerId,
             garment_type: garmentType,
-            chest,
-            waist,
-            hip,
-            shoulder,
-            sleeve,
-            neck,
-            length,
-            inseam,
-            thigh,
-            bottom,
-            front_neck: frontNeck,
-            back_neck: backNeck,
-            notes
+
+            chest: chest || null,
+            waist: waist || null,
+            hip: hip || null,
+            shoulder: shoulder || null,
+            sleeve: sleeve || null,
+            neck: neck || null,
+            length: length || null,
+            inseam: inseam || null,
+            thigh: thigh || null,
+            bottom: bottom || null,
+            front_neck: frontNeck || null,
+            back_neck: backNeck || null,
+
+            notes: notes
         };
 
         try {
@@ -171,6 +187,7 @@ function Measurement() {
             );
 
             const data = await response.json();
+            console.log("FULL RESPONSE:", data);
 
             if (!response.ok) {
                 throw new Error(
@@ -219,31 +236,54 @@ function Measurement() {
                 editingMeasurementId ? handleUpdate : handleSubmit
             }
         >
+        
+        <div className="form-group">
+            <label>CUSTOMER</label>
 
-                <div className="form-group">
-                    <label>CUSTOMER ID</label>
-                    <input
-                        type="number"
-                        value={customerId}
-                        onChange={(e) =>
-                            setCustomerId(e.target.value)
-                        }
-                        placeholder="Enter customer ID"
-                        required
-                    />
-                </div>
+            <select
+                value={customerId}
+                onChange={(e) => {
+                    const id = e.target.value;
+                    setCustomerId(id);
+
+                    const customer = customers.find(
+                        (c) => String(c.id) === id
+                    );
+
+                    setSelectedCustomerName(
+                        customer ? customer.name : ""
+                    );
+                }}
+                required
+            >
+                <option value="">Select customer</option>
+
+                {customers.map((customer) => (
+                    <option
+                        key={customer.id}
+                        value={customer.id}
+                    >
+                        {customer.name}
+                    </option>
+                ))}
+            </select>
+        </div>
 
                 <div className="form-group">
                     <label>GARMENT TYPE</label>
-                    <input
-                        type="text"
+                <select
                         value={garmentType}
-                        onChange={(e) =>
-                            setGarmentType(e.target.value)
-                        }
-                        placeholder="e.g. Shirt"
+                        onChange={(e) => setGarmentType(e.target.value)}
                         required
-                    />
+                        >
+                        <option value="">Select garment type</option>
+                        <option value="Shirt">Shirt</option>
+                        <option value="Blouse">Blouse</option>
+                        <option value="Kurti">Kurti</option>
+                        <option value="Lehenga">Lehenga</option>
+                        <option value="Pant">Pant</option>
+                        <option value="Custom">Custom</option>
+                </select>
                 </div>
 
                 <div className="form-group">

@@ -10,11 +10,11 @@ function Order() {
     const [totalAmount, setTotalAmount] = useState("");
     const [advanceAmount, setAdvanceAmount] = useState("");
     const [notes, setNotes] = useState("");
-
     const [message, setMessage] = useState("");
     const [orders, setOrders] = useState([]);
     const [editingOrderId, setEditingOrderId] = useState(null);
     const [customers, setCustomers] = useState([]);
+    const [measurements, setMeasurements] = useState([]);
 
     // Get existing orders
     useEffect(() => {
@@ -228,52 +228,104 @@ const handleUpdate = (e) => {
                 onSubmit={editingOrderId ? handleUpdate : handleSubmit}
             >
 
-                <div className="form-group">
-                    <label>CUSTOMER</label>
+            <div className="form-group">
+                <label>CUSTOMER</label>
 
-                    <select
-                        value={customerId}
-                        onChange={(e) => setCustomerId(e.target.value)}
-                        required
-                    >
-                        <option value="">Select customer</option>
+                <select
+                    value={customerId}
+                    onChange={(e) => {
+                        const selectedCustomerId = e.target.value;
 
-                        {customers.map((customer) => (
-                            <option
-                                key={customer.id}
-                                value={customer.id}
-                            >
-                                {customer.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                        setCustomerId(selectedCustomerId);
+                        setMeasurementId("");
+                        setGarmentType("");
 
-                <div className="form-group">
-                    <label>MEASUREMENT ID</label>
-
-                    <input
-                        type="number"
-                        placeholder="Enter measurement ID"
-                        value={measurementId}
-                        onChange={(e) =>
-                            setMeasurementId(e.target.value)
+                        if (!selectedCustomerId) {
+                            setMeasurements([]);
+                            return;
                         }
-                    />
-                </div>
 
-                <div className="form-group">
-                    <label>GARMENT TYPE</label>
+                        fetch(
+                            `http://localhost:5000/api/measurements/customer/${selectedCustomerId}`
+                        )
+                            .then((response) => response.json())
+                            .then((data) => {
+                                console.log("Customer Measurements:", data);
+                                setMeasurements(data.measurements || []);
+                            })
+                            .catch((error) => {
+                                console.error(
+                                    "Error fetching measurements:",
+                                    error
+                                );
+                            });
+                    }}
+                    required
+                >
+                    <option value="">Select customer</option>
 
-                    <input
-                        type="text"
-                        placeholder="Enter garment type"
-                        value={garmentType}
-                        onChange={(e) =>
-                            setGarmentType(e.target.value)
+                    {customers.map((customer) => (
+                        <option
+                            key={customer.id}
+                            value={customer.id}
+                        >
+                            {customer.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label>MEASUREMENT</label>
+
+                <select
+                    value={measurementId}
+                    onChange={(e) => {
+                        const selectedMeasurementId = e.target.value;
+
+                        setMeasurementId(selectedMeasurementId);
+
+                        const selectedMeasurement = measurements.find(
+                            (measurement) =>
+                                String(measurement.id) === selectedMeasurementId
+                        );
+
+                        if (selectedMeasurement) {
+                            setGarmentType(selectedMeasurement.garment_type);
+                        } else {
+                            setGarmentType("");
                         }
-                    />
-                </div>
+                    }}
+                    required
+                    disabled={!customerId}
+                >
+                    <option value="">
+                        {customerId
+                            ? "Select measurement"
+                            : "Select customer first"}
+                    </option>
+
+                    {measurements.map((measurement) => (
+                        <option
+                            key={measurement.id}
+                            value={measurement.id}
+                        >
+                            {measurement.garment_type}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label>GARMENT TYPE</label>
+
+                <input
+                    type="text"
+                    value={garmentType}
+                    placeholder="Select measurement first"
+                    readOnly
+                />
+            </div>
 
                 <div className="form-group">
                     <label>QUANTITY</label>
@@ -402,9 +454,7 @@ const handleUpdate = (e) => {
                                 onClick={() => {
                                     setEditingOrderId(order.id);
 
-                                    setCustomerId(order.customer_id);
-                                    setMeasurementId(order.measurement_id);
-                                    setGarmentType(order.garment_type);
+                                    setCustomerId(String(order.customer_id));
                                     setQuantity(order.quantity);
                                     setDeliveryDate(
                                         order.delivery_date
@@ -414,6 +464,25 @@ const handleUpdate = (e) => {
                                     setTotalAmount(order.total_amount);
                                     setAdvanceAmount(order.advance_amount);
                                     setNotes(order.notes || "");
+
+                                    // Fetch measurements of this customer for edit
+                                    fetch(
+                                        `http://localhost:5000/api/measurements/customer/${order.customer_id}`
+                                    )
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            setMeasurements(data.measurements || []);
+
+                                            // Select the measurement already used in this order
+                                            setMeasurementId(String(order.measurement_id));
+                                            setGarmentType(order.garment_type);
+                                        })
+                                        .catch((error) => {
+                                            console.error(
+                                                "Error fetching measurements for edit:",
+                                                error
+                                            );
+                                        });
                                 }}
                             >
                                 EDIT ORDER
