@@ -423,11 +423,20 @@ function Measurement() {
                 {measurements.length === 0 ? (
                     <p>No measurements found.</p>
                 ) : (
-                    measurements.map((measurement) => (
+                measurements.map((measurement) => {
+                const customer = customers.find(
+                    (c) => c.id === measurement.customer_id
+                );
+
+            return (
                         <div
                             key={measurement.id}
                             className="measurement-card"
                         >
+                <p>
+                <strong>Customer Name:</strong>{" "}
+                {customer ? customer.name : "Unknown"}
+                </p>
                 <p><strong>ID:</strong> {measurement.id}</p>
                 <p><strong>Customer ID:</strong> {measurement.customer_id}</p>
                 <p><strong>Garment:</strong> {measurement.garment_type}</p>
@@ -469,8 +478,9 @@ function Measurement() {
                     DELETE MEASUREMENT
                 </button>
             </div>
-        ))
-    )}
+        );
+    })
+)}
 
 </div>
         </div>
