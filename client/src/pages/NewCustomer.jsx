@@ -6,6 +6,7 @@ function NewCustomer() {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,10 +31,16 @@ function NewCustomer() {
 
     const data = await response.json();
 
+    setMessage("Customer added successfully!");
+    setName("");
+    setPhone("");
+    setEmail("");
+    setAddress("");
+
     console.log(data);
 };
     return (
-        <div className="new-customer">
+        <div className="customer-page">
 
             {/* PAGE HEADER */}
             <header className="customer-header">
@@ -83,6 +90,7 @@ function NewCustomer() {
                     ></textarea>
                 </div>
 
+                {message && <p>{message}</p>}
                 <button type="submit" className="save-customer">
                     SAVE CUSTOMER →
                 </button>

@@ -427,10 +427,10 @@ body {
 
 /* ===== THE STITCH HQ — DASHBOARD ===== */
 /* Shared cream base + dark plum text, so it still feels like the same
-   product as the login screen — but the navy/gold is retired here.
-   Signature motif: each section number becomes a small notched "garment
-   tag" in that section's accent, and a dashed "seam" runs under every
-   heading — a literal nod to stitching, used consistently instead of
+  product as the login screen — but the navy/gold is retired here.
+  Signature motif: each section number becomes a small notched "garment
+  tag" in that section's accent, and a dashed "seam" runs under every
+  heading — a literal nod to stitching, used consistently instead of
    scattered decoration. */
 
 .dashboard {
@@ -553,7 +553,7 @@ body {
 }
 
 /* ===== ORDER RADAR — color-coded by status, not one flat accent =====
-   In progress: slate blue (steady) · Ready: pine green (good to go)
+  In progress: slate blue (steady) · Ready: pine green (good to go)
    Overdue: rust (urgent) — the color itself carries the meaning. */
 
 .order-radar {
@@ -786,4 +786,595 @@ body {
   margin-top: 5px;
   font-size: 10px;
   opacity: 0.5;
+}
+/* ===== NEW CUSTOMER PAGE — bold rani pink theme ===== */
+
+.customer-page {
+  min-height: 100vh;
+  padding: 55px 8%;
+  color: #20263E;
+  line-height: 1.6; /* same line spacing everywhere on this page */
+
+  /* stack heading + form and center both, instead of side-by-side */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* own background — pink/orange glow instead of plain dashboard cream */
+  background:
+    radial-gradient(circle at 88% 0%, rgba(214, 51, 108, 0.16), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(247, 107, 28, 0.14), transparent 45%),
+    #FDF3EE;
+}
+
+/* page heading */
+
+.customer-header {
+  margin-bottom: 55px;
+  text-align: center; /* was left-aligned, now centered with the page */
+}
+
+.customer-header p {
+  margin: 0 0 12px;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: #D6336C; /* rani pink accent */
+  font-weight: 700;
+}
+
+.customer-header h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+  font-weight: 500;
+  letter-spacing: -2px;
+  color: #20263E; /* fixes the invisible-heading bug */
+}
+
+/* form container */
+
+.customer-form {
+  width: min(100%, 700px);
+  padding: 45px;
+  border: 1px solid rgba(214, 51, 108, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 50px rgba(214, 51, 108, 0.15);
+}
+
+/* each field wrapper */
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #6D675E;
+}
+
+/* text inputs */
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 13px 4px;
+  border: none;
+  border-bottom: 1px solid #C8BDAE;
+  outline: none;
+  background: transparent;
+  color: #20263E;
+  font-family: "DM Sans", sans-serif;
+  font-size: 17px;
+}
+
+/* input focus state */
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-bottom: 2px solid #D6336C; /* pink on focus */
+}
+
+/* address box */
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* placeholder text */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #A29B91;
+}
+
+/* save button — bold gradient, this is the "crazy" bit */
+
+.save-customer {
+  width: 100%;
+  margin-top: 15px;
+  padding: 18px 22px;
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(100deg, #D6336C, #F76B1C);
+  color: #FFFFFF;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* button hover */
+
+.save-customer:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 15px 30px rgba(214, 51, 108, 0.35);
+}
+/* order page — emerald + amber split layout */
+
+.order-page {
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 55px) clamp(20px, 8vw, 8%);
+  color: #142A22;
+  line-height: 1.6;
+
+  /* split grid instead of single centered column */
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-areas:
+    "header header"
+    "form   list";
+  gap: 0 clamp(24px, 4vw, 55px);
+  align-items: start;
+
+  /* mesh gradient — emerald + amber jewel tones */
+  background:
+    radial-gradient(circle at 10% 0%, rgba(15, 118, 78, 0.30), transparent 45%),
+    radial-gradient(circle at 92% 15%, rgba(217, 158, 45, 0.32), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(15, 118, 78, 0.16), transparent 55%),
+    #F8F6EE;
+}
+
+/* header spans both columns */
+
+.order-header {
+  grid-area: header;
+  margin-bottom: clamp(28px, 5vw, 45px);
+  text-align: center;
+}
+
+.order-header p {
+  margin: 0 0 12px;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #D99E2D; /* amber */
+}
+
+.order-header h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  color: #142A22;
+}
+
+/* status */
+
+.order-page > p {
+  grid-column: 1 / -1;
+  margin: -20px 0 25px;
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 600;
+  color: #0F764E;
+}
+
+/* form panel — left side, fields in a 2-col grid (dense, workspace feel) */
+
+.order-form {
+  grid-area: form;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(4px, 1vw, 6px) clamp(14px, 2.5vw, 24px);
+  padding: clamp(22px, 4vw, 40px);
+  border: 1px solid rgba(15, 118, 78, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 50px rgba(217, 158, 45, 0.18);
+}
+
+/* field */
+
+.form-group {
+  margin-bottom: clamp(16px, 3vw, 24px);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: clamp(11px, 1.4vw, 13px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #4E7A68;
+}
+
+/* notes + button take the full width of the grid */
+
+.order-form .form-group:has(textarea),
+.order-form .save-order {
+  grid-column: 1 / -1;
+}
+
+/* inputs */
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 4px;
+  border: none;
+  border-bottom: 1px solid rgba(15, 118, 78, 0.3);
+  outline: none;
+  background: transparent;
+  color: #142A22;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(14px, 1.8vw, 16px);
+}
+
+/* focus */
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-bottom: 2px solid #D99E2D;
+}
+
+/* notes */
+
+.form-group textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #A9C3B7;
+}
+
+/* button */
+
+.save-order {
+  margin-top: 10px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px);
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(100deg, #0F764E, #D99E2D);
+  color: #FFFFFF;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.save-order:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 15px 30px rgba(15, 118, 78, 0.35);
+}
+
+/* orders list — right side panel, own surface */
+
+.orders-list {
+  grid-area: list;
+  padding: clamp(18px, 3vw, 30px);
+  background: rgba(15, 118, 78, 0.05);
+  border: 1px solid rgba(15, 118, 78, 0.15);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.orders-list h2 {
+  font-size: clamp(11px, 1.4vw, 13px);
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: #142A22;
+  margin-bottom: clamp(16px, 3vw, 22px);
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(15, 118, 78, 0.3);
+}
+
+/* card */
+
+.order-card {
+  padding: clamp(12px, 2vw, 18px);
+  margin-bottom: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(15, 118, 78, 0.15);
+  border-left: 3px solid #D99E2D;
+}
+
+.order-card p {
+  margin: 0 0 5px;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: #3D5C50;
+}
+
+.order-card strong {
+  color: #142A22;
+}
+
+/* actions */
+
+.order-card button {
+  margin-top: 10px;
+  margin-right: 8px;
+  padding: 7px 13px;
+  border: 1px solid rgba(15, 118, 78, 0.4);
+  background: transparent;
+  color: #0F764E;
+  font-size: clamp(9px, 1.2vw, 10px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.order-card button:hover {
+  background: #0F764E;
+  color: #FFFFFF;
+}
+
+/* stack into one column on narrow screens */
+
+@media (max-width: 900px) {
+  .order-page {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "form"
+      "list";
+  }
+
+  .order-form {
+    grid-template-columns: 1fr;
+  }
+
+  .orders-list {
+    max-height: none;
+  }
+}
+
+/* measurement page — aubergine + antique gold, dense grid layout */
+
+.measurement-page {
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 55px) clamp(20px, 8vw, 8%);
+  color: #2B1638;
+  line-height: 1.6;
+
+  /* purple shade gradient — purple now from the right, gold from the left */
+  background:
+    radial-gradient(circle at 8% 0%, rgba(201, 162, 39, 0.28), transparent 45%),
+    radial-gradient(circle at 95% 10%, rgba(91, 58, 142, 0.30), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(43, 22, 56, 0.18), transparent 55%),
+    #F8F3FC;
+}
+
+/* heading */
+
+.measurement-header {
+  margin-bottom: clamp(28px, 5vw, 45px);
+  text-align: center;
+}
+
+.measurement-header p {
+  margin: 0 0 12px;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #C9A227; /* antique gold */
+}
+
+.measurement-header h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  color: #2B1638;
+}
+
+/* status */
+
+.measurement-page > p {
+  text-align: center;
+  margin: -20px 0 25px;
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 600;
+  color: #5B3A8E;
+}
+
+/* form — dense 3-column grid, tailor's chart feel */
+
+.measurement-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(4px, 1vw, 8px) clamp(16px, 2.5vw, 28px);
+  max-width: 1000px;
+  margin: 0 auto clamp(40px, 6vw, 60px);
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid rgba(91, 58, 142, 0.22);
+  border-top: 3px solid #C9A227; /* gold stripe */
+  background: #FFFCF8; /* solid, so page texture doesn't show through */
+  box-shadow: 0 20px 50px rgba(91, 58, 142, 0.12);
+}
+
+/* customer, garment type, notes, button span full width */
+
+.measurement-form .form-group:nth-child(1),
+.measurement-form .form-group:nth-child(2),
+.measurement-form .form-group:has(textarea),
+.measurement-form button {
+  grid-column: 1 / -1;
+}
+
+/* field */
+
+.form-group {
+  margin-bottom: clamp(14px, 2.5vw, 22px);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(10px, 1.3vw, 12px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #8A7291;
+}
+
+/* inputs + select */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px 4px;
+  border: none;
+  border-bottom: 1px solid rgba(91, 58, 142, 0.3);
+  outline: none;
+  background: transparent;
+  color: #2B1638;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(13px, 1.6vw, 15px);
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+/* focus */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-bottom: 2px solid #C9A227;
+}
+
+/* notes */
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #C9BBCE;
+}
+
+/* submit button (no class in JSX, so target directly) */
+
+.measurement-form button {
+  margin-top: 10px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px);
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(100deg, #5B3A8E, #C9A227);
+  color: #FFFFFF;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.measurement-form button:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 15px 30px rgba(91, 58, 142, 0.3);
+}
+
+/* existing measurements — compact card grid, not a stacked list */
+
+.measurements-list {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.measurements-list h2 {
+  text-align: center;
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: #2B1638;
+  margin-bottom: clamp(20px, 3vw, 28px);
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(91, 58, 142, 0.3);
+}
+
+.measurements-list > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: clamp(14px, 2vw, 20px);
+}
+
+/* card */
+
+.measurement-card {
+  padding: clamp(16px, 2.5vw, 20px);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(91, 58, 142, 0.15);
+  border-top: 3px solid #C9A227;
+}
+
+.measurement-card p {
+  margin: 0 0 5px;
+  font-size: clamp(12px, 1.4vw, 13px);
+  color: #5B4A64;
+}
+
+.measurement-card strong {
+  color: #2B1638;
+}
+
+/* edit / delete (no classes in JSX, so target directly) */
+
+.measurement-card button {
+  margin-top: 10px;
+  margin-right: 8px;
+  padding: 7px 13px;
+  border: 1px solid rgba(91, 58, 142, 0.4);
+  background: transparent;
+  color: #5B3A8E;
+  font-size: clamp(9px, 1.2vw, 10px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.measurement-card button:hover {
+  background: #5B3A8E;
+  color: #FFFFFF;
+}
+
+/* stack to 1-column form on narrow screens */
+
+@media (max-width: 750px) {
+  .measurement-form {
+    grid-template-columns: 1fr;
+  }
+
+  .measurement-form .form-group:has(textarea),
+  .measurement-form button {
+    grid-column: 1;
+  }
 }

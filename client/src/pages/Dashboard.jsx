@@ -1,8 +1,48 @@
 import "../App.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function Dashboard() {
+    const [searchValue, setSearchValue] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchMessage, setSearchMessage] = useState("");
     const navigate = useNavigate();
+    const handleCustomerSearch = async () => {
+    if (!searchValue.trim()) {
+        setSearchMessage("Enter customer name or phone.");
+        setSearchResults([]);
+        return;
+    }
+
+    try {
+        const isPhone = /^\d+$/.test(searchValue.trim());
+
+        const query = isPhone
+            ? `phone=${encodeURIComponent(searchValue.trim())}`
+            : `name=${encodeURIComponent(searchValue.trim())}`;
+
+        const response = await fetch(
+            `http://localhost:5000/api/customers/search?${query}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Failed to search customers"
+            );
+        }
+
+        setSearchResults(data.customers || []);
+        setSearchMessage("");
+
+    } catch (error) {
+        console.error("Customer search error:", error);
+        setSearchResults([]);
+        setSearchMessage(error.message);
+    }
+};
     return (
         <div className="dashboard">
 
@@ -28,8 +68,15 @@ function Dashboard() {
             <button onClick={() => navigate("/new-customer")}>
                     ＋ New Customer
             </button>
-            <button>＋ New Order</button>
-            <button>＋ Add Measurement</button>
+            <button onClick={() => window.location.href = "/order"}>
+                    ＋ New Order
+            </button>
+            <button onClick={() => window.location.href = "/measurement"}>
+                    ＋ Add Measurement
+            </button>
+            <button onClick={() => navigate("/payment")}>
+                ＋ Add Payment
+            </button>
             </div>
 
         </section>
