@@ -526,9 +526,9 @@ body {
 }
 
 .quick-actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2vw, 24px);
 }
 
 .quick-actions button {
@@ -1377,4 +1377,240 @@ body {
   .measurement-form button {
     grid-column: 1;
   }
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.payment-card button {
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+/* payment page — deep teal + ruby, receipt-slip layout */
+
+.payment-page {
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 55px) clamp(20px, 8vw, 8%);
+  color: #0F2E2E;
+  line-height: 1.6;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* deep teal + ruby glow — bold, jewel-tone */
+  background:
+    radial-gradient(circle at 10% 0%, rgba(15, 118, 110, 0.32), transparent 48%),
+    radial-gradient(circle at 92% 100%, rgba(200, 30, 74, 0.30), transparent 48%),
+    #F6F4EC;
+}
+
+/* heading */
+
+.payment-header {
+  margin-bottom: clamp(28px, 5vw, 45px);
+  text-align: center;
+}
+
+.payment-header p {
+  margin: 0 0 12px;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #C81E4A; /* ruby */
+}
+
+.payment-header h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  color: #0F2E2E;
+}
+
+/* status */
+
+.payment-page > p {
+  margin: -20px 0 25px;
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 600;
+  color: #0F766E;
+}
+
+/* form — narrow receipt-slip width, perforated top edge */
+
+.payment-form {
+  width: min(100%, 560px);
+  margin-bottom: clamp(36px, 5vw, 55px);
+  padding: clamp(24px, 4vw, 40px);
+  background: #FFFEF9;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-top: 4px dashed #C81E4A; /* perforated tear line (ruby) */
+  box-shadow: 0 20px 45px rgba(15, 118, 110, 0.14);
+}
+
+/* field */
+
+.form-group {
+  margin-bottom: clamp(18px, 3vw, 26px);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(11px, 1.4vw, 13px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #4E6E6A;
+}
+
+/* inputs + select */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px 4px;
+  border: none;
+  border-bottom: 1px solid rgba(15, 118, 110, 0.25);
+  outline: none;
+  background: transparent;
+  color: #0F2E2E;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(14px, 1.7vw, 16px);
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+/* focus */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-bottom: 2px solid #C81E4A;
+}
+
+/* notes */
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #AFC7C3;
+}
+
+/* selected order summary — its own mini receipt block */
+
+.payment-order-details {
+  margin: -8px 0 24px;
+  padding: 16px 18px;
+  background: rgba(15, 118, 110, 0.05);
+  border-left: 3px solid #C81E4A;
+  font-size: clamp(12px, 1.5vw, 13px);
+}
+
+.payment-order-details p {
+  margin: 0 0 6px;
+  color: #3D5C58;
+}
+
+.payment-order-details p:last-child {
+  margin-bottom: 0;
+}
+
+.payment-order-details strong {
+  color: #0F2E2E;
+}
+
+/* submit button (no class in JSX, target directly) */
+
+.payment-form button {
+  width: 100%;
+  margin-top: 8px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px);
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(100deg, #0F766E, #C81E4A);
+  color: #FFFFFF;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.payment-form button:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 15px 30px rgba(15, 118, 110, 0.3);
+}
+
+/* payment history — stacked receipt slips */
+
+.payments-list {
+  width: min(100%, 560px);
+}
+
+.payments-list h2 {
+  text-align: center;
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: #0F2E2E;
+  margin-bottom: clamp(20px, 3vw, 28px);
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(15, 118, 110, 0.3);
+}
+
+/* card — each payment looks like a torn receipt slip */
+
+.payment-card {
+  padding: clamp(18px, 3vw, 24px);
+  margin-bottom: 18px;
+  background: #FFFEF9;
+  border: 1px solid rgba(15, 118, 110, 0.15);
+  border-top: 3px dashed #C81E4A;
+}
+
+.payment-card p {
+  margin: 0 0 6px;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: #3D5C58;
+}
+
+.payment-card strong {
+  color: #0F2E2E;
+}
+
+/* actions (no class in JSX, target directly) */
+
+.payment-card button {
+  margin-top: 10px;
+  margin-right: 8px;
+  padding: 8px 14px;
+  border: 1px solid rgba(15, 118, 110, 0.4);
+  background: transparent;
+  color: #0F766E;
+  font-size: clamp(9px, 1.2vw, 10px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.payment-card button:hover {
+  background: #0F766E;
+  color: #FFFFFF;
 }
