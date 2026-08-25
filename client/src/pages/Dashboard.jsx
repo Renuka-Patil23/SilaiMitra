@@ -50,8 +50,8 @@ function Dashboard() {
         <header className="dashboard-header">
             <div>
             <p className="dashboard-label">SILAI MITRA</p>
-            <h1>THE STITCH HQ</h1>
-            <p>Your atelier. Your orders. Your craft.</p>
+            <h1>SMART STITCH</h1>
+            <p>Modern Tools for Modern Tailors.</p>
             </div>
         </header>
 
@@ -79,8 +79,7 @@ function Dashboard() {
             </button>
             </div>
 
-        </section>
-
+        </section> 
 
         {/* 02 — ORDER RADAR */}
         <section className="order-radar">
