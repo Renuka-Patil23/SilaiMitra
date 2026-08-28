@@ -221,3 +221,93 @@ GET http://localhost:5000/api/orders/filter?customer_id=1
 
 # filter orders by delivery date
 GET http://localhost:5000/api/orders/filter?delivery_date=2026-08-25 
+
+# to update the status 
+PATCH http://localhost:5000/api/orders/2/status
+
+{
+    "status": "In Progress"
+}
+
+# show upcoming deliveries
+GET http://localhost:5000/api/orders/delivery/upcoming
+
+
+
+## Login and registeration api
+
+# registration 
+# (admin)
+POST http://localhost:5000/api/auth/register
+
+{
+    "name": "Admin",
+    "email": "admin@silaimitra.com",
+    "password": "Admin@123",
+    "role": "admin"
+}
+
+# --->
+ {
+  "success": true,
+  "message": "User registered successfully",
+  "user": {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@silaimitra.com",
+    "role": "admin",
+    "created_at": "2026-08-21T09:35:58.000Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzaWxhaW1pdHJhLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NzMwNDk1OCwiZXhwIjoxNzg3MzkxMzU4fQ._tFwtLHnvz1L9SAtgc-40fKb2Bs9eRiXd1zkR_QSI8I"
+}
+
+# (Staff)
+
+{
+    "name": "Staff User",
+    "email": "staff@silaimitra.com",
+    "password": "Staff@123",
+    "role": "staff"
+}
+
+{
+  "success": true,
+  "message": "User registered successfully",
+  "user": {
+    "id": 2,
+    "name": "Staff User",
+    "email": "staff@silaimitra.com",
+    "role": "staff",
+    "created_at": "2026-08-21T14:36:10.000Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJzdGFmZkBzaWxhaW1pdHJhLmNvbSIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTc4NzMyMjk3MCwiZXhwIjoxNzg3NDA5MzcwfQ.pPM4nWEkxarHh7Yye-hFPZxeimz9acfYS54mGk4DQM0"
+}
+
+# login  
+POST http://localhost:5000/api/auth/login
+
+{
+    "email": "admin@silaimitra.com",
+    "password": "Admin@123"
+}
+
+# --->
+{
+  "success": true,
+  "message": "Login successful",
+  "user": {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@silaimitra.com",
+    "role": "admin",
+    "created_at": "2026-08-21T09:35:58.000Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzaWxhaW1pdHJhLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NzMwNTE1OSwiZXhwIjoxNzg3MzkxNTU5fQ.2wwVapNUpdQhjA1Z94AfTYWM4Tw-XTOca6qPVm18How"
+}
+
+
+# test /me
+GET http://localhost:5000/api/auth/me
+
+---> pass the authorization - Bearer _Token here_
+
