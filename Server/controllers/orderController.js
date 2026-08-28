@@ -554,11 +554,122 @@ const filterOrders = (req, res) => {
     });
 };
 
+// Update Order Status
+const updateOrderStatus = (req, res) => {
+
+    const id = req.params.id;
+    const { status } = req.body;
+
+    const validStatuses = [
+        "Pending",
+        "In Progress",
+        "Ready",
+        "Delivered",
+        "Cancelled"
+    ];
+
+    // Validate status
+    if (!status || !validStatuses.includes(status)) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid order status.",
+            allowedStatuses: validStatuses
+        });
+    }
+
+    // Check order exists
+    const checkSql = "SELECT * FROM orders WHERE id = ?";
+
+    db.query(checkSql, [id], (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Database error.",
+                error: err.message
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found."
+            });
+        }
+
+        // Update status
+        const updateSql = `
+            UPDATE orders
+            SET status = ?
+            WHERE id = ?
+        `;
+
+        db.query(updateSql, [status, id], (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to update order status.",
+                    error: err.message
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Order status updated successfully.",
+                orderId: id,
+                status: status
+            });
+
+        });
+
+    });
+
+};
+
+// Get Upcoming Deliveries
+const getUpcomingDeliveries = (req, res) => {
+
+    const sql = `
+        SELECT
+            o.*,
+            c.name AS customer_name,
+            c.phone AS customer_phone
+        FROM orders o
+        JOIN customers c
+            ON o.customer_id = c.id
+        WHERE o.delivery_date >= CURDATE()
+        AND o.status NOT IN ('Delivered', 'Cancelled')
+        ORDER BY o.delivery_date ASC
+    `;
+
+    db.query(sql, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch upcoming deliveries.",
+                error: err.message
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            count: results.length,
+            deliveries: results
+        });
+
+    });
+
+};
+
 module.exports = {
     addOrder,
     getOrders,
     getOrderById,
+    updateOrderStatus,
     getOrdersByCustomer,
+    getUpcomingDeliveries,
     updateOrder,
     deleteOrder,
     filterOrders,

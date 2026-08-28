@@ -4,6 +4,8 @@ require("dotenv").config();
 // Connect to MySQL database
 require("./config/db");
 
+const authRoutes = require("./routes/authRoutes");
+
 // Import required packages
 const express = require("express");
 const cors = require("cors");
@@ -24,6 +26,8 @@ const measurementRoutes = require("./routes/measurementRoutes");       //measure
 const orderRoutes = require("./routes/orderRoutes");        //oders module 
 const paymentRoutes = require("./routes/paymentRoutes");    //payment module
 const dashboardRoutes = require("./routes/dashboardRoutes");  //dashboard module
+
+app.use("/api/auth", authRoutes);   //auth module
 
 app.use("/api/customers", customerRoutes);
 app.use("/api/measurements", measurementRoutes);
