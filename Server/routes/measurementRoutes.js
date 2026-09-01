@@ -1,4 +1,5 @@
 // Measurement Routes
+const { authenticate } = require("../middleware/authMiddleware");
 
 const express = require("express");
 const router = express.Router();
@@ -12,22 +13,31 @@ const {
     deleteMeasurement,
 } = require("../controllers/measurementController");
 
+const {
+    addMeasurementValidator,
+    updateMeasurementValidator,
+    measurementIdValidator,
+    measurementCustomerValidator
+} = require("../validators/measurementValidator");
+
+const validateRequest = require("../validators/validateRequest");
+
 // Add Measurement
-router.post("/", addMeasurement);
+router.post("/", authenticate, addMeasurementValidator, validateRequest, addMeasurement);
 
 // Get All Measurements
-router.get("/", getMeasurements);
+router.get("/", authenticate, getMeasurements);
 
 // Get All Measurements of One Customer
-router.get("/customer/:customerId", getMeasurementsByCustomer);
+router.get("/customer/:customerId", authenticate, measurementCustomerValidator, validateRequest, getMeasurementsByCustomer);
 
 // Get Measurement By ID
-router.get("/:id", getMeasurementById);
+router.get("/:id", authenticate, measurementIdValidator, validateRequest, getMeasurementById);
 
 // Update Measurement
-router.put("/:id", updateMeasurement);
+router.put("/:id", authenticate, updateMeasurementValidator, validateRequest, updateMeasurement);
 
 // Delete Measurement
-router.delete("/:id", deleteMeasurement);
+router.delete("/:id", authenticate, measurementIdValidator, validateRequest, deleteMeasurement);
 
 module.exports = router;
