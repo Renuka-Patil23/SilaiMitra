@@ -187,7 +187,7 @@ function Measurement() {
             );
 
             const data = await response.json();
-            console.log("FULL RESPONSE:", data);
+            console.log("FULL RESPONSE:", JSON.stringify(data, null, 2));
 
             if (!response.ok) {
                 throw new Error(
@@ -279,7 +279,7 @@ function Measurement() {
                         <option value="">Select garment type</option>
                         <option value="Shirt">Shirt</option>
                         <option value="Blouse">Blouse</option>
-                        <option value="Kurti">Kurti</option>
+                        <option value="Kurta">Kurta</option>
                         <option value="Lehenga">Lehenga</option>
                         <option value="Pant">Pant</option>
                         <option value="Custom">Custom</option>

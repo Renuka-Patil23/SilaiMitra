@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,6 +7,83 @@ function Dashboard() {
     const [searchValue, setSearchValue] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [searchMessage, setSearchMessage] = useState("");
+    const [orders, setOrders] = useState([]);
+    const [recentOrders, setRecentOrders] = useState([]);
+    const [upcomingDeliveries, setUpcomingDeliveries] = useState([]);
+    const [paymentSummary, setPaymentSummary] = useState({
+    totalOrderValue: 0,
+    totalPaymentsReceived: 0,
+    totalPendingAmount: 0
+});
+    useEffect(() => {
+    fetch("http://localhost:5000/api/orders")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Dashboard Orders:", data);
+            setOrders(data.orders || []);
+        })
+        .catch((error) => {
+            console.error("Error fetching dashboard orders:", error);
+        });
+}, []);
+    useEffect(() => {
+    fetch("http://localhost:5000/api/dashboard/recent-orders")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Recent Orders:", data);
+            setRecentOrders(data.orders || []);
+        })
+        .catch((error) => {
+            console.error("Error fetching recent orders:", error);
+        });
+}, []);
+    useEffect(() => {
+    fetch("http://localhost:5000/api/dashboard/upcoming-deliveries")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Upcoming Deliveries:", data);
+            setUpcomingDeliveries(data.deliveries || []);
+        })
+        .catch((error) => {
+            console.error("Error fetching upcoming deliveries:", error);
+        });
+}, []);
+    useEffect(() => {
+    fetch("http://localhost:5000/api/dashboard/payment-summary")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Payment Summary:", data);
+
+            if (data.success) {
+                setPaymentSummary(data.paymentSummary);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching payment summary:", error);
+        });
+}, []);
+
+    const inProgress = orders.filter(
+    (order) =>
+        order.status === "Pending" ||
+        order.status === "In Progress"
+).length;
+
+    const ready = orders.filter(
+        (order) => order.status === "Ready"
+    ).length;
+
+    const overdue = orders.filter((order) => {
+        const today = new Date();
+        const deliveryDate = new Date(order.delivery_date);
+
+        return (
+            deliveryDate < today &&
+            order.status !== "Ready" &&
+            order.status !== "Delivered"
+        );
+    }).length;
+
     const navigate = useNavigate();
     const handleCustomerSearch = async () => {
     if (!searchValue.trim()) {
@@ -92,17 +169,17 @@ function Dashboard() {
             <div className="order-stats">
 
             <div className="order-stat">
-                <strong>12</strong>
+                <strong>{inProgress}</strong>
                 <span>IN PROGRESS</span>
             </div>
 
             <div className="order-stat">
-                <strong>05</strong>
+                <strong>{ready}</strong>
                 <span>READY</span>
             </div>
 
             <div className="order-stat">
-                <strong>03</strong>
+                <strong>{overdue}</strong>
                 <span>OVERDUE</span>
             </div>
 
@@ -160,36 +237,58 @@ function Dashboard() {
 
             <div className="activity-list">
 
-            <div className="activity-item">
-                <span className="activity-dot">✦</span>
+            {recentOrders.length > 0 ? (
+                recentOrders.map((order) => (
+                    <div className="activity-item" key={order.orderId}>
+                        <span className="activity-dot">✦</span>
 
-                <div>
-                <strong>Riya's measurements updated</strong>
-                <p>2 minutes ago</p>
+                        <div>
+                            <strong>
+                                New {order.garmentType} order from {order.customerName}
+                            </strong>
+
+                            <p>
+                                Status: {order.status}
+                            </p>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <p>No recent activity found.</p>
+            )}
+            </div>
+
+            <section className="upcoming-deliveries">
+    <div className="section-heading">
+        <span>05</span>
+        <h2>UPCOMING DELIVERIES</h2>
+    </div>
+
+    <div className="delivery-list">
+        {upcomingDeliveries.length > 0 ? (
+            upcomingDeliveries.map((delivery) => (
+                <div className="delivery-item" key={delivery.orderId}>
+                    <div>
+                        <strong>
+                            {delivery.customerName} — {delivery.garmentType}
+                        </strong>
+
+                        <p>
+                            Qty: {delivery.quantity} | Status: {delivery.status}
+                        </p>
+                    </div>
+
+                    <span>
+                        {new Date(delivery.deliveryDate).toLocaleDateString()}
+                    </span>
                 </div>
-            </div>
+            ))
+        ) : (
+            <p>No upcoming deliveries.</p>
+        )}
+    </div>
+</section>
 
-
-            <div className="activity-item">
-                <span className="activity-dot">✦</span>
-
-                <div>
-                <strong>New order from Ananya</strong>
-                <p>18 minutes ago</p>
-                </div>
-            </div>
-
-
-            <div className="activity-item">
-                <span className="activity-dot">✦</span>
-
-                <div>
-                <strong>Rahul's shirt marked ready</strong>
-                <p>42 minutes ago</p>
-                </div>
-            </div>
-
-            </div>
 
         </section>
 
