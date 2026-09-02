@@ -748,18 +748,24 @@ body {
 
 /* ================= RECENT ACTIVITY ================= */
 
-/* Recent Activity section */
 .recent-activity {
   margin-bottom: 60px;
 }
 
-/* List of activities */
+/* 04 number - same shape as 01, 02, 03 */
+.recent-activity .section-heading span {
+  background: #a87b38;
+}
+
+.recent-activity .section-heading {
+  border-bottom-color: rgba(168, 123, 56, 0.35);
+}
+
 .activity-list {
   display: flex;
   flex-direction: column;
 }
 
-/* One activity row */
 .activity-item {
   display: flex;
   align-items: center;
@@ -768,25 +774,163 @@ body {
   border-bottom: 1px solid rgba(32, 36, 58, 0.15);
 }
 
-/* Activity icon */
 .activity-dot {
   font-size: 14px;
   color: #a87b38;
 }
 
-/* Activity title */
 .activity-item strong {
   display: block;
   font-size: 13px;
   font-weight: 1000;
 }
 
-/* Activity time */
 .activity-item p {
   margin-top: 5px;
   font-size: 10px;
   opacity: 0.5;
 }
+
+
+/* ================= UPCOMING DELIVERIES ================= */
+
+.upcoming-deliveries {
+  margin-bottom: 60px;
+}
+
+/* 05 number */
+.upcoming-deliveries .section-heading span {
+  background: #3b5a6b;
+}
+
+.upcoming-deliveries .section-heading {
+  border-bottom-color: rgba(59, 90, 107, 0.35);
+}
+
+.delivery-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(32, 36, 58, 0.15);
+}
+
+.delivery-item strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 1000;
+}
+
+.delivery-item p {
+  margin-top: 5px;
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.delivery-item > span {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+/* ================= PAYMENT SUMMARY ================= */
+
+.payment-summary {
+  margin-bottom: 60px;
+}
+
+/* 06 number */
+.payment-summary .section-heading span {
+  background: #2d4a3e;
+}
+
+.payment-summary .section-heading {
+  border-bottom-color: rgba(45, 74, 62, 0.35);
+}
+
+.payment-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.payment-stat {
+  padding: 24px;
+  border: 1px solid rgba(32, 36, 58, 0.15);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.payment-stat strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 1000;
+  margin-bottom: 8px;
+}
+
+.payment-stat span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+
+/* ================= CUSTOMERS ================= */
+
+.customers-section {
+  margin-bottom: 60px;
+}
+
+/* 07 number */
+.customers-section .section-heading span {
+  background: #4a2545;
+}
+
+.customers-section .section-heading {
+  border-bottom-color: rgba(74, 37, 69, 0.35);
+}
+
+.customers-dashboard-action {
+  padding: 24px;
+  border: 1px solid rgba(204, 223, 143, 0.15);
+  border-radius: 12px;
+}
+
+.customers-dashboard-action p {
+  margin: 0 0 15px 0;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.customers-dashboard-action button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+
+  background: #F3E7EF;
+  color: #4a2545;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.25s ease;
+}
+
+.customers-dashboard-action button:hover {
+  background: #4a2545;
+  color: #F3E7EF;
+  transform: translateY(-2px);
+}
+
 /* ===== NEW CUSTOMER PAGE — bold rani pink theme ===== */
 
 .customer-page {
@@ -1612,5 +1756,241 @@ body {
 
 .payment-card button:hover {
   background: #0F766E;
+  color: #FFFFFF;
+}
+
+/* customers page — fiery crimson-pink-orange, bold */
+
+.customers-page {
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 55px) clamp(20px, 8vw, 8%);
+  color: #2A2422;
+  line-height: 1.6;
+
+  /* cards have no wrapper div in JSX, so grid lives on the page itself */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: clamp(16px, 2.5vw, 22px);
+  align-items: start;
+
+  /* bold fiery gradient — crimson to hot pink to orange */
+  background:
+    radial-gradient(circle at 8% 0%, rgba(220, 38, 38, 0.35), transparent 50%),
+    radial-gradient(circle at 60% 15%, rgba(236, 27, 118, 0.30), transparent 50%),
+    radial-gradient(circle at 95% 90%, rgba(249, 115, 22, 0.32), transparent 50%),
+    #FFF3EC;
+}
+
+/* everything except .customer-card spans the full row */
+
+.customers-page > h1,
+.customers-page > .customer-search,
+.customers-page > .customer-message,
+.customers-page > .edit-form,
+.customers-page > p {
+  grid-column: 1 / -1;
+}
+
+/* page title */
+
+.customers-page > h1 {
+  text-align: center;
+  margin: 0 0 clamp(28px, 5vw, 40px);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  color: #2A2422;
+}
+
+/* search bar */
+
+.customer-search {
+  display: flex;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto clamp(24px, 4vw, 36px);
+}
+
+.customer-search input {
+  flex: 1;
+  padding: 13px 16px;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  outline: none;
+  color: #2A2422;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(13px, 1.6vw, 15px);
+}
+
+.customer-search input:focus {
+  border-color: #DC2626;
+}
+
+.customer-search button {
+  padding: 12px 20px;
+  border: none;
+  background: #DC2626;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* clear button — outline in hot pink, differentiates from solid Search */
+
+.customer-search button:last-of-type {
+  background: transparent;
+  border: 1px solid rgba(236, 27, 118, 0.55);
+  color: #EC1B76;
+}
+
+.customer-search button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.25);
+}
+
+.customer-search button:last-of-type:hover {
+  background: #EC1B76;
+  color: #FFFFFF;
+}
+
+/* status message */
+
+.customer-message {
+  text-align: center;
+  max-width: 640px;
+  margin: -12px auto 30px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #DC2626;
+}
+
+/* edit panel */
+
+.edit-form {
+  max-width: 640px;
+  margin: 0 auto clamp(30px, 5vw, 45px);
+  padding: clamp(22px, 4vw, 34px);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-top: 3px solid #DC2626;
+  box-shadow: 0 20px 45px rgba(220, 38, 38, 0.15);
+}
+
+.edit-form h2 {
+  margin: 0 0 20px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #2A2422;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 11px 4px;
+  margin-bottom: 18px;
+  border: none;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.25);
+  outline: none;
+  background: transparent;
+  color: #2A2422;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-bottom: 2px solid #DC2626;
+}
+
+.edit-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.edit-form button {
+  padding: 12px 22px;
+  margin-right: 10px;
+  border: none;
+  background: linear-gradient(100deg, #DC2626, #DC2626);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* cancel button — muted outline */
+
+.edit-form button:last-of-type {
+  background: transparent;
+  border: 1px solid rgba(43, 18, 32, 0.3);
+  color: #2A2422;
+}
+
+.edit-form button:hover {
+  transform: translateY(-2px);
+}
+
+/* customer cards fall into the grid columns defined on .customers-page above */
+
+.customer-card {
+  padding: clamp(18px, 3vw, 24px);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-left: 3px solid #DC2626;
+  transition: 0.25s ease;
+}
+
+.customer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(220, 38, 38, 0.15);
+}
+
+.customer-card h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: #2A2422;
+}
+
+.customer-card p {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: #6B5A56;
+}
+
+.customer-card button {
+  margin-top: 12px;
+  margin-right: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  background: transparent;
+  color: #DC2626;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* delete button — hot pink outline, differentiates from Edit */
+
+.customer-card button:last-of-type {
+  border-color: rgba(236, 27, 118, 0.55);
+  color: #EC1B76;
+}
+
+.customer-card button:hover {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+.customer-card button:last-of-type:hover {
+  background: #EC1B76;
   color: #FFFFFF;
 }

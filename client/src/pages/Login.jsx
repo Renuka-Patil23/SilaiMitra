@@ -1,8 +1,53 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 
-
 function Login() {
+    const navigate = useNavigate();
+
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [message, setMessage] = useState("");
+const [loading, setLoading] = useState(false);
+
+const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setMessage("");
+    setLoading(true);
+
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            setMessage(data.message || "Login failed");
+            return;
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        navigate("/dashboard");
+    } catch (error) {
+        console.error("Login Error:", error);
+        setMessage("Unable to connect to server");
+    } finally {
+        setLoading(false);
+    }
+};
+
     return (
     <div className="atelier">
 
@@ -80,13 +125,16 @@ function Login() {
             are waiting for you.
         </p>
 
-        <form>
+        <form onSubmit={handleLogin}>
 
             <div className="input-group">
             <label>ATELIER EMAIL</label>
             <input
                 type="email"
                 placeholder="master@silaimitra.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
             />
             </div>
 
@@ -99,7 +147,10 @@ function Login() {
         <input
                 type="password"
                 placeholder="••••••••••"
-        />
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            />
             </div>
 
             <div className="options">
@@ -111,9 +162,21 @@ function Login() {
             <span>🔒 Secure access</span>
             </div>
 
-            <button className="enter-btn" type="submit">
-            <span>ENTER THE ATELIER</span>
-            <b>→</b>
+            {message && (
+                <p className="login-message">
+                    {message}
+                </p>
+            )}
+
+            <button
+                className="enter-btn"
+                type="submit"
+                disabled={loading}
+            >
+                <span>
+                    {loading ? "ENTERING..." : "ENTER THE ATELIER"}
+                </span>
+                <b>→</b>
             </button>
 
         </form>

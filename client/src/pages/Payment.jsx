@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 
 function Payment() {
+    const authHeaders = (includeJson = false) => {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        };
+
+        if (includeJson) {
+            headers["Content-Type"] = "application/json";
+        }
+
+        return headers;
+    };
+
     const [orderId, setOrderId] = useState("");
     const [amount, setAmount] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
@@ -20,19 +32,22 @@ function Payment() {
         try {
             // Customers
             const customerResponse = await fetch(
-                "http://localhost:5000/api/customers"
+                "http://localhost:5000/api/customers",
+                { headers: authHeaders() }
             );
             const customerData = await customerResponse.json();
 
             // Orders
             const orderResponse = await fetch(
-                "http://localhost:5000/api/orders"
+                "http://localhost:5000/api/orders",
+                { headers: authHeaders() }
             );
             const orderData = await orderResponse.json();
 
             // Payments
             const paymentResponse = await fetch(
-                "http://localhost:5000/api/payments"
+                "http://localhost:5000/api/payments",
+                { headers: authHeaders() }
             );
             const paymentData = await paymentResponse.json();
 
@@ -70,7 +85,8 @@ function Payment() {
         const response = await fetch(
             `http://localhost:5000/api/payments/${id}`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                headers: authHeaders()
             }
         );
 
@@ -116,9 +132,7 @@ function Payment() {
 
             const response = await fetch(url, {
                 method: method,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: authHeaders(true),
                 body: JSON.stringify(paymentData)
             });
 
@@ -144,7 +158,8 @@ function Payment() {
             setNotes("");
 
             const paymentResponse = await fetch(
-                "http://localhost:5000/api/payments"
+                "http://localhost:5000/api/payments",
+                { headers: authHeaders() }
             );
 
             const paymentsData = await paymentResponse.json();
