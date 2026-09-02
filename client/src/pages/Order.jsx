@@ -2,6 +2,14 @@ import "../App.css";
 import { useState, useEffect } from "react";
 
 function Order() {
+    const authHeaders = (includeJson = false) => {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        };
+        if (includeJson) headers["Content-Type"] = "application/json";
+        return headers;
+    };
+
     const [customerId, setCustomerId] = useState("");
     const [measurementId, setMeasurementId] = useState("");
     const [garmentType, setGarmentType] = useState("");
@@ -18,7 +26,7 @@ function Order() {
 
     // Get existing orders
     useEffect(() => {
-        fetch("http://localhost:5000/api/orders")
+        fetch("http://localhost:5000/api/orders", { headers: authHeaders() })
             .then(async (response) => {
                 const data = await response.json();
 
@@ -39,7 +47,7 @@ function Order() {
             });
     }, []);
     useEffect(() => {
-    fetch("http://localhost:5000/api/customers")
+    fetch("http://localhost:5000/api/customers", { headers: authHeaders() })
         .then(async (response) => {
             const data = await response.json();
 
@@ -65,7 +73,8 @@ function Order() {
     }
 
     fetch(`http://localhost:5000/api/orders/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: authHeaders()
     })
         .then(async (response) => {
             const data = await response.json();
@@ -109,9 +118,7 @@ const handleUpdate = (e) => {
 
     fetch(`http://localhost:5000/api/orders/${editingOrderId}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: authHeaders(true),
         body: JSON.stringify(orderData)
     })
         .then(async (response) => {
@@ -130,7 +137,7 @@ const handleUpdate = (e) => {
             setEditingOrderId(null);
 
             // Refresh orders
-            return fetch("http://localhost:5000/api/orders");
+            return fetch("http://localhost:5000/api/orders", { headers: authHeaders() });
         })
         .then((response) => response.json())
         .then((data) => {
@@ -161,9 +168,7 @@ const handleUpdate = (e) => {
 
         fetch("http://localhost:5000/api/orders", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: authHeaders(true),
             body: JSON.stringify(orderData)
         })
             .then(async (response) => {
@@ -200,7 +205,7 @@ const handleUpdate = (e) => {
                     ]);
                 } else {
                     // Refresh orders if backend doesn't return the order object
-                    fetch("http://localhost:5000/api/orders")
+                    fetch("http://localhost:5000/api/orders", { headers: authHeaders() })
                         .then((response) => response.json())
                         .then((data) => {
                             setOrders(data.orders || []);
@@ -246,7 +251,8 @@ const handleUpdate = (e) => {
                         }
 
                         fetch(
-                            `http://localhost:5000/api/measurements/customer/${selectedCustomerId}`
+                            `http://localhost:5000/api/measurements/customer/${selectedCustomerId}`,
+                            { headers: authHeaders() }
                         )
                             .then((response) => response.json())
                             .then((data) => {
@@ -467,7 +473,8 @@ const handleUpdate = (e) => {
 
                                     // Fetch measurements of this customer for edit
                                     fetch(
-                                        `http://localhost:5000/api/measurements/customer/${order.customer_id}`
+                                        `http://localhost:5000/api/measurements/customer/${order.customer_id}`,
+                                        { headers: authHeaders() }
                                     )
                                         .then((response) => response.json())
                                         .then((data) => {
