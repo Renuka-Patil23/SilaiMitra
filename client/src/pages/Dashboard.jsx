@@ -157,26 +157,43 @@ function Dashboard() {
                 </div>
 
                 <div className="style-categories">
-                    <div className="style-card">
+
+                <div
+                        className="style-card"
+                        onClick={() => navigate("/designs/lehenga")}
+                    >
                         <span className="style-icon">👗</span>
                         <h3>LEHENGA</h3>
-                        <p>08 designs</p>
+                        <p>View designs →</p>
                     </div>
-                    <div className="style-card">
+
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/designs/shirt")}
+                    >
                         <span className="style-icon">👔</span>
                         <h3>SHIRT</h3>
-                        <p>12 designs</p>
+                        <p>View designs →</p>
                     </div>
-                    <div className="style-card">
-                        <span className="style-icon">🥻</span>
-                        <h3>SAREE</h3>
-                        <p>06 designs</p>
+
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/designs/blouse")}
+                    >
+                        <span className="style-icon">👚</span>
+                        <h3>BLOUSE</h3>
+                        <p>View designs →</p>
                     </div>
-                    <div className="style-card">
+
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/designs/custom")}
+                    >
                         <span className="style-icon">✦</span>
                         <h3>CUSTOM</h3>
-                        <p>04 designs</p>
+                        <p>View designs →</p>
                     </div>
+
                 </div>
             </section>
 
