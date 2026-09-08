@@ -9,36 +9,51 @@ function NewCustomer() {
     const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const customerData = {
-        name: name,
-        phone: phone,
-        email: email,
-        address: address
+        const customerData = {
+            name,
+            phone,
+            email,
+            address
+        };
+
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/customers",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify(customerData)
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Failed to add customer"
+                );
+            }
+
+            setMessage("Customer added successfully!");
+
+            setName("");
+            setPhone("");
+            setEmail("");
+            setAddress("");
+
+            console.log("Customer created:", data);
+
+        } catch (error) {
+            console.error("Error adding customer:", error);
+            setMessage(error.message);
+        }
     };
 
-    const response = await fetch(
-        "http://localhost:5000/api/customers",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(customerData)
-        }
-    );
-
-    const data = await response.json();
-
-    setMessage("Customer added successfully!");
-    setName("");
-    setPhone("");
-    setEmail("");
-    setAddress("");
-
-    console.log(data);
-};
     return (
         <div className="customer-page">
 
@@ -49,30 +64,38 @@ function NewCustomer() {
             </header>
 
             {/* CUSTOMER FORM */}
-            <form className="customer-form" onSubmit={handleSubmit}>
+            <form
+                className="customer-form"
+                onSubmit={handleSubmit}
+            >
 
                 <div className="form-group">
                     <label>CUSTOMER NAME</label>
+
                     <input
                         type="text"
                         placeholder="Enter customer name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
                     />
                 </div>
 
                 <div className="form-group">
                     <label>MOBILE NUMBER</label>
+
                     <input
                         type="tel"
                         placeholder="Enter mobile number"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
+                        required
                     />
                 </div>
 
                 <div className="form-group">
                     <label>EMAIL</label>
+
                     <input
                         type="email"
                         placeholder="Enter email address"
@@ -83,6 +106,7 @@ function NewCustomer() {
 
                 <div className="form-group">
                     <label>ADDRESS</label>
+
                     <textarea
                         placeholder="Enter customer address"
                         value={address}
@@ -91,7 +115,11 @@ function NewCustomer() {
                 </div>
 
                 {message && <p>{message}</p>}
-                <button type="submit" className="save-customer">
+
+                <button
+                    type="submit"
+                    className="save-customer"
+                >
                     SAVE CUSTOMER →
                 </button>
 
