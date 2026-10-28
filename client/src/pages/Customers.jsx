@@ -42,8 +42,37 @@ function Customers() {
     };
 
     useEffect(() => {
-        fetchCustomers();
-    }, []);
+    let cancelled = false;
+
+    const loadCustomers = async () => {
+        try {
+            const response = await fetch(`${API_URL}/customers`, {
+                headers: authHeaders()
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to fetch customers");
+            }
+
+            if (!cancelled) {
+                setCustomers(data.customers || []);
+            }
+        } catch (error) {
+            if (!cancelled) {
+                console.error("Error fetching customers:", error);
+                setSearchMessage(error.message);
+            }
+        }
+    };
+
+    loadCustomers();
+
+    return () => {
+        cancelled = true;
+    };
+}, []);
 
     const handleSearch = async () => {
         const value = searchValue.trim();
