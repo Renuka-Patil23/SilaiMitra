@@ -7,6 +7,7 @@ import Order from "./pages/Order";
 import Measurement from "./pages/Measurement";
 import Payment from "./pages/Payment";
 import DesignGallery from "./pages/DesignGallery";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/measurement" element={<Measurement />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/designs/:category" element={<DesignGallery />} />
+        
       </Routes>
     </BrowserRouter>
   );

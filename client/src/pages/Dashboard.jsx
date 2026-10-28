@@ -125,6 +125,7 @@ function Dashboard() {
                     <button onClick={() => navigate("/order")}>＋ New Order</button>
                     <button onClick={() => navigate("/measurement")}>＋ Add Measurement</button>
                     <button onClick={() => navigate("/payment")}>＋ Add Payment</button>
+                    <button onClick={() => navigate("/notifications")}>✉ SMS Notifications</button>
                 </div>
             </section>
 
