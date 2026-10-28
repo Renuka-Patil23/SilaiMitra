@@ -26,6 +26,7 @@ const measurementRoutes = require("./routes/measurementRoutes");       //measure
 const orderRoutes = require("./routes/orderRoutes");        //oders module 
 const paymentRoutes = require("./routes/paymentRoutes");    //payment module
 const dashboardRoutes = require("./routes/dashboardRoutes");  //dashboard module
+const notificationRoutes = require("./routes/notificationRoutes"); //notification module
 
 app.use("/api/auth", authRoutes);   //auth module
 
@@ -34,6 +35,7 @@ app.use("/api/measurements", measurementRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
