@@ -8,6 +8,7 @@ import Measurement from "./pages/Measurement";
 import Payment from "./pages/Payment";
 import DesignGallery from "./pages/DesignGallery";
 import Notifications from "./pages/Notifications";
+import OutfitColorMatcher from "./pages/OutfitColorMatcher";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/designs/:category" element={<DesignGallery />} />
+        <Route path="/outfit-colors" element={<OutfitColorMatcher />} />
         
       </Routes>
     </BrowserRouter>
