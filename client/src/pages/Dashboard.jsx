@@ -315,6 +315,24 @@ function Dashboard() {
                         </h3>
                         <p>Calculate fabric requirements →</p>
                     </div>
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/ai-design")}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                navigate("/ai-design");
+                            }
+                        }}
+                    >
+                        <span className="style-icon">✨</span>
+                        <h3 style={{ color: "#0F766E" }}>
+                            SMART DESIGN RECOMMENDATION
+                        </h3>
+                        <p>Get personalised design ideas →</p>
+                    </div>
                 </div>
             </section>
 
