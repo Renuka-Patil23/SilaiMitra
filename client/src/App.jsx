@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -9,6 +10,8 @@ import Payment from "./pages/Payment";
 import DesignGallery from "./pages/DesignGallery";
 import FabricCalculator from "./pages/FabricCalculator";
 import AIDesign from "./pages/AIDesign";
+import Notifications from "./pages/Notifications";
+import OutfitColorMatcher from "./pages/OutfitColorMatcher";
 
 function App() {
   return (
@@ -21,9 +24,11 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/measurement" element={<Measurement />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/designs/:category" element={<DesignGallery />} />
         <Route path="/fabric-calculator" element={<FabricCalculator />} />
         <Route path="/ai-design" element={<AIDesign />} />
+        <Route path="/outfit-colors" element={<OutfitColorMatcher />} />
       </Routes>
     </BrowserRouter>
   );
