@@ -8,6 +8,7 @@ import Measurement from "./pages/Measurement";
 import Payment from "./pages/Payment";
 import DesignGallery from "./pages/DesignGallery";
 import FabricCalculator from "./pages/FabricCalculator";
+import AIDesign from "./pages/AIDesign";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/designs/:category" element={<DesignGallery />} />
         <Route path="/fabric-calculator" element={<FabricCalculator />} />
+        <Route path="/ai-design" element={<AIDesign />} />
       </Routes>
     </BrowserRouter>
   );
