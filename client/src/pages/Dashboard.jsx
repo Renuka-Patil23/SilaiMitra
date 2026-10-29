@@ -125,6 +125,7 @@ function Dashboard() {
                     <button onClick={() => navigate("/order")}>＋ New Order</button>
                     <button onClick={() => navigate("/measurement")}>＋ Add Measurement</button>
                     <button onClick={() => navigate("/payment")}>＋ Add Payment</button>
+                    <button onClick={() => navigate("/notifications")}>✉ SMS Notifications</button>
                 </div>
             </section>
 
@@ -192,6 +193,15 @@ function Dashboard() {
                         <span className="style-icon">✦</span>
                         <h3>CUSTOM</h3>
                         <p>View designs →</p>
+                    </div>
+
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/outfit-colors")}
+                    >
+                        <span className="style-icon">🎨</span>
+                        <h3>COLOR MATCHER</h3>
+                        <p>Find matching colours →</p>
                     </div>
 
                 </div>
