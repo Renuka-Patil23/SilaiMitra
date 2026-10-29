@@ -195,6 +195,15 @@ function Dashboard() {
                         <p>View designs →</p>
                     </div>
 
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/outfit-colors")}
+                    >
+                        <span className="style-icon">🎨</span>
+                        <h3>COLOR MATCHER</h3>
+                        <p>Find matching colours →</p>
+                    </div>
+
                 </div>
             </section>
 
