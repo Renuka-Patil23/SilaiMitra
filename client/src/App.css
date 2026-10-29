@@ -2286,6 +2286,12 @@ body {
   line-height: 1.6;
 }
 
+.smart-tools .section-heading span {
+  background: #3B5A6B;
+  color: #fff;
+  clip-path: polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%);
+}
+
 @media (max-width: 600px) {
   .outfit-matcher {
     padding: 14px;
