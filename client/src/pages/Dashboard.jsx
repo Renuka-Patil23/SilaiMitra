@@ -158,7 +158,7 @@ function Dashboard() {
 
                 <div className="style-categories">
 
-                <div
+                    <div
                         className="style-card"
                         onClick={() => navigate("/designs/lehenga")}
                     >
@@ -289,6 +289,35 @@ function Dashboard() {
                     </button>
                 </div>
             </section>
+
+
+            <section className="smart-tools">
+                <div className="section-heading">
+                    <span>08</span>
+                    <h2>SMART TOOLS</h2>
+                </div>
+
+                <div className="style-categories">
+                    <div
+                        className="style-card"
+                        onClick={() => navigate("/fabric-calculator")}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                                navigate("/fabric-calculator");
+                            }
+                        }}
+                    >
+                        <span className="style-icon">🧵</span>
+                        <h3 style={{ color: "#0F766E" }}>
+                            SMART FABRIC CALCULATOR
+                        </h3>
+                        <p>Calculate fabric requirements →</p>
+                    </div>
+                </div>
+            </section>
+
         </div>
     );
 }
