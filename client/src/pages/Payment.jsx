@@ -28,89 +28,93 @@ function Payment() {
     const [editingPaymentId, setEditingPaymentId] = useState(null);
 
     useEffect(() => {
-    const fetchData = async () => {
-        try {
-            // Customers
-            const customerResponse = await fetch(
-                "http://localhost:5000/api/customers",
-                { headers: authHeaders() }
-            );
-            const customerData = await customerResponse.json();
+        const fetchData = async () => {
+            try {
+                // Customers
+                const customerResponse = await fetch(
+                    "http://localhost:5000/api/customers",
+                    { headers: authHeaders() }
+                );
+                const customerData = await customerResponse.json();
 
-            // Orders
-            const orderResponse = await fetch(
-                "http://localhost:5000/api/orders",
-                { headers: authHeaders() }
-            );
-            const orderData = await orderResponse.json();
+                // Orders
+                const orderResponse = await fetch(
+                    "http://localhost:5000/api/orders",
+                    { headers: authHeaders() }
+                );
+                const orderData = await orderResponse.json();
 
-            // Payments
-            const paymentResponse = await fetch(
-                "http://localhost:5000/api/payments",
-                { headers: authHeaders() }
-            );
-            const paymentData = await paymentResponse.json();
+                // Payments
+                const paymentResponse = await fetch(
+                    "http://localhost:5000/api/payments",
+                    { headers: authHeaders() }
+                );
+                const paymentData = await paymentResponse.json();
 
-            setCustomers(customerData.customers || []);
-            setOrders(orderData.orders || []);
-            setPayments(paymentData.payments || []);
+                setCustomers(customerData.customers || []);
+                setOrders(orderData.orders || []);
+                setPayments(paymentData.payments || []);
 
-        } catch (error) {
-            console.error("Error loading payment data:", error);
-        }
-    };
+            } catch (error) {
+                console.error("Error loading payment data:", error);
+            }
+        };
 
-    fetchData();
-}, []);
+        fetchData();
+    }, []);
 
     const handleCustomerChange = (e) => {
-    const id = Number(e.target.value);
+        const id = Number(e.target.value);
 
-    setCustomerId(e.target.value);
-    setOrderId("");
-    setSelectedOrder(null);
+        setCustomerId(e.target.value);
+        setOrderId("");
+        setSelectedOrder(null);
 
-    const filtered = orders.filter(
-        (order) => Number(order.customer_id) === id
-    );
-
-    setCustomerOrders(filtered);
-};
-    const handleDeletePayment = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this payment?")) {
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `http://localhost:5000/api/payments/${id}`,
-            {
-                method: "DELETE",
-                headers: authHeaders()
-            }
+        const filtered = orders.filter(
+            (order) => Number(order.customer_id) === id
         );
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(
-                data.message || "Failed to delete payment"
-            );
+        setCustomerOrders(filtered);
+    };
+    const handleDeletePayment = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this payment?")) {
+            return;
         }
 
-        setMessage("Payment deleted successfully!");
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/payments/${id}`,
+                {
+                    method: "DELETE",
+                    headers: authHeaders()
+                }
+            );
 
-        setPayments((previousPayments) =>
-            previousPayments.filter(
-                (payment) => payment.id !== id
-            )
-        );
+            const data = await response.json();
 
-    } catch (error) {
-        console.error("Error deleting payment:", error);
-        setMessage(error.message);
-    }
-};
+            console.log("Payment API Response:", data);
+
+            if (!response.ok) {
+                console.error("Payment Validation Error:", data.errors || data);
+
+                throw new Error(
+                    JSON.stringify(data.errors || data.message || data)
+                );
+            }
+
+            setMessage("Payment deleted successfully!");
+
+            setPayments((previousPayments) =>
+                previousPayments.filter(
+                    (payment) => payment.id !== id
+                )
+            );
+
+        } catch (error) {
+            console.error("Error deleting payment:", error);
+            setMessage(error.message);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -177,7 +181,7 @@ function Payment() {
 
             <header className="payment-header">
                 <p>SILAI MITRA</p>
-                <h1>ADD PAYMENT</h1> 
+                <h1>ADD PAYMENT</h1>
             </header>
 
             {message && <p>{message}</p>}
@@ -245,14 +249,14 @@ function Payment() {
                 </div>
 
                 {selectedOrder && (
-                        <div className="payment-order-details">
-                            <p><strong>Garment:</strong> {selectedOrder.garment_type}</p>
-                            <p><strong>Total Amount:</strong> ₹{selectedOrder.total_amount}</p>
-                            <p><strong>Advance:</strong> ₹{selectedOrder.advance_amount}</p>
-                            <p><strong>Remaining:</strong> ₹{selectedOrder.remaining_amount}</p>
-                            <p><strong>Status:</strong> {selectedOrder.status}</p>
-                        </div>
-                    )}
+                    <div className="payment-order-details">
+                        <p><strong>Garment:</strong> {selectedOrder.garment_type}</p>
+                        <p><strong>Total Amount:</strong> ₹{selectedOrder.total_amount}</p>
+                        <p><strong>Advance:</strong> ₹{selectedOrder.advance_amount}</p>
+                        <p><strong>Remaining:</strong> ₹{selectedOrder.remaining_amount}</p>
+                        <p><strong>Status:</strong> {selectedOrder.status}</p>
+                    </div>
+                )}
 
                 <div className="form-group">
                     <label>AMOUNT</label>
@@ -306,7 +310,7 @@ function Payment() {
                         onChange={(e) =>
                             setNotes(e.target.value)
                         }
-                    />     
+                    />
                 </div>
 
                 <button type="submit">
@@ -316,93 +320,93 @@ function Payment() {
             </form>
             <div className="payments-list">
 
-    <h2>PAYMENT HISTORY</h2>
+                <h2>PAYMENT HISTORY</h2>
 
-    {payments.length === 0 ? (
-        <p>No payments found.</p>
-    ) : (
-        payments.map((payment) => (
-            <div
-                key={payment.id}
-                className="payment-card"
-            >
-                <p>
-                    <strong>Payment ID:</strong>{" "}
-                    {payment.id}
-                </p>
+                {payments.length === 0 ? (
+                    <p>No payments found.</p>
+                ) : (
+                    payments.map((payment) => (
+                        <div
+                            key={payment.id}
+                            className="payment-card"
+                        >
+                            <p>
+                                <strong>Payment ID:</strong>{" "}
+                                {payment.id}
+                            </p>
 
-                <p>
-                    <strong>Order ID:</strong>{" "}
-                    {payment.order_id}
-                </p>
+                            <p>
+                                <strong>Order ID:</strong>{" "}
+                                {payment.order_id}
+                            </p>
 
-                <p>
-                    <strong>Amount:</strong>{" "}
-                    ₹{payment.amount}
-                </p>
+                            <p>
+                                <strong>Amount:</strong>{" "}
+                                ₹{payment.amount}
+                            </p>
 
-                <p>
-                    <strong>Method:</strong>{" "}
-                    {payment.payment_method}
-                </p>
+                            <p>
+                                <strong>Method:</strong>{" "}
+                                {payment.payment_method}
+                            </p>
 
-                <p>
-                    <strong>Date:</strong>{" "}
-                    {payment.payment_date
-                        ? payment.payment_date.split("T")[0]
-                        : "-"}
-                </p>
+                            <p>
+                                <strong>Date:</strong>{" "}
+                                {payment.payment_date
+                                    ? payment.payment_date.split("T")[0]
+                                    : "-"}
+                            </p>
 
-                <p>
-                    <strong>Notes:</strong>{" "}
-                    {payment.notes || "-"}
-                </p>
-                <button
-                    type="button"
-                    onClick={() => {
-                        setEditingPaymentId(payment.id);
+                            <p>
+                                <strong>Notes:</strong>{" "}
+                                {payment.notes || "-"}
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setEditingPaymentId(payment.id);
 
-                        setOrderId(String(payment.order_id));
-                        setAmount(payment.amount);
-                        setPaymentMethod(payment.payment_method);
-                        setPaymentDate(
-                            payment.payment_date
-                                ? payment.payment_date.split("T")[0]
-                                : ""
-                        );
-                        setNotes(payment.notes || "");
+                                    setOrderId(String(payment.order_id));
+                                    setAmount(payment.amount);
+                                    setPaymentMethod(payment.payment_method);
+                                    setPaymentDate(
+                                        payment.payment_date
+                                            ? payment.payment_date.split("T")[0]
+                                            : ""
+                                    );
+                                    setNotes(payment.notes || "");
 
-                        const relatedOrder = orders.find(
-                            (order) => Number(order.id) === Number(payment.order_id)
-                        );
+                                    const relatedOrder = orders.find(
+                                        (order) => Number(order.id) === Number(payment.order_id)
+                                    );
 
-                        if (relatedOrder) {
-                            setCustomerId(String(relatedOrder.customer_id));
+                                    if (relatedOrder) {
+                                        setCustomerId(String(relatedOrder.customer_id));
 
-                            const filteredOrders = orders.filter(
-                                (order) =>
-                                    Number(order.customer_id) ===
-                                    Number(relatedOrder.customer_id)
-                            );
+                                        const filteredOrders = orders.filter(
+                                            (order) =>
+                                                Number(order.customer_id) ===
+                                                Number(relatedOrder.customer_id)
+                                        );
 
-                            setCustomerOrders(filteredOrders);
-                            setSelectedOrder(relatedOrder);
-                        }
-                    }}
-                >
-                    EDIT PAYMENT
-                </button>
-                <button
-                    type="button"
-                    onClick={() => handleDeletePayment(payment.id)}
-                >
-                    DELETE PAYMENT
-                </button>
+                                        setCustomerOrders(filteredOrders);
+                                        setSelectedOrder(relatedOrder);
+                                    }
+                                }}
+                            >
+                                EDIT PAYMENT
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleDeletePayment(payment.id)}
+                            >
+                                DELETE PAYMENT
+                            </button>
+                        </div>
+                    ))
+                )}
+
             </div>
-        ))
-    )}
-
-</div>
         </div>
     );
 }

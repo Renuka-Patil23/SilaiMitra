@@ -124,7 +124,7 @@ CREATE TABLE orders (
 );
 
 
---payments table
+-- payments table
 
 CREATE TABLE payments (
     id INT AUTO_INCREMENT PRIMARY KEY,
